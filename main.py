@@ -56,3 +56,11 @@ class ConvertImage():
             return
 
 
+PathInput = filedialog.askdirectory(title="Select Drictory For Save")
+PathOutput = filedialog.askdirectory(title="Select Drictory For Save")
+test = ConvertImage(PathInput , PathOutput , 'webp')
+Start = time.time()
+test.FindImages()
+print(test.Images[1])
+test.Run()
+print(time.time() - Start)

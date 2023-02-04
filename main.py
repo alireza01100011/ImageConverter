@@ -17,7 +17,20 @@ class ConvertImage():
         self.FormatOutout = ForamtOutput
     
     def FindImages(self):
-        pass
+        # Get the files and folders in the input folder
+        ListDir = os.listdir(self.PathInput)
+        
+        Images = list()
+        # Filter photos
+        for item in ListDir :
+            item = item.split('.')
+            if item[-1] in self.FormatsInput:
+                name = ''
+                for l in item[:-1]: name += '.' + l
+                name = name[1:]
+                Images.append((name,item[-1]))
+        
+        self.Images = Images
     def ConvertImage(self , Photo):
         pass
     

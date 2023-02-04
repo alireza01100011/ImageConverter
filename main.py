@@ -42,6 +42,13 @@ class ConvertImage():
         except OSError : return False
     
     def Run(self):
-        pass
+        if self.FAST == True:
+            pass
+        elif self.FAST == False :
+            for img in self.Images:
+                self.ConvertImage(img)
+        
+        else :
+            return
 
 

@@ -32,7 +32,14 @@ class ConvertImage():
         
         self.Images = Images
     def ConvertImage(self , Photo):
-        pass
+        try :
+            # Open The Image
+            Img = Image.open(f'{self.PathInput}/{Photo[0]}.{Photo[1]}')
+            # Convert the image to RGB Colour
+            Img = Img.convert('RGB')
+            # Save The Image
+            Img.save(f'{self.PathOutput}/{Photo[0]}.{self.FormatOutout}' , self.FormatOutout)
+        except OSError : return False
     
     def Run(self):
         pass

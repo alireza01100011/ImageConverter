@@ -43,7 +43,11 @@ class ConvertImage():
     
     def Run(self):
         if self.FAST == True:
-            pass
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                Tasks = [executor.submit(self.ConvertImage , img) for img in self.Images]
+
+                for task in Tasks:
+                    task.result()
         elif self.FAST == False :
             for img in self.Images:
                 self.ConvertImage(img)

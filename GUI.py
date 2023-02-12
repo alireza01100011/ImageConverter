@@ -28,13 +28,13 @@ class GUI():
 
         # ### === >  Buttons < ==== ### #
         # JPG
-        Button_JPG = Button(FreameButtomFormatOutPut , text='JPG' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_JPG = Button(FreameButtomFormatOutPut , text='JPG' , bg='#66FFFF'  , width=4 , height=1 , font=FontButton)
         Button_JPG.place(x=30 , y=80)
         # PNG
-        Button_PNG = Button(FreameButtomFormatOutPut , text='PNG' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_PNG = Button(FreameButtomFormatOutPut , text='PNG' , bg='#33FFFF'  , width=4 , height=1 , font=FontButton)
         Button_PNG.place(x=170 , y=80)
         # WEBP
-        Button_WEBP = Button(FreameButtomFormatOutPut , text='WEBP' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_WEBP = Button(FreameButtomFormatOutPut , text='WEBP' , bg='#00FFFF'  , width=4 , height=1 , font=FontButton)
         Button_WEBP.place(x=300 , y=80)
         # Select Images
         FontButtonINPandOUT = font.Font(family='Comic Sans MS', size=10)
@@ -47,9 +47,13 @@ class GUI():
         Button_Seve = Button(FreameSTART , text='Start' , bg='#FFFFFF'  , width=6 , height=2 , font=font.Font(family='Comic Sans MS', size=12, weight='bold'))
         Button_Seve.place(x=310 , y=50)
 
-    
+        # ### === >  Labels (Text) < ==== ### #
+        Label(FreameButtomFormatOutPut , text='Which Format Should Your Images Be Converted To ? ' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold')).place(x=30 , y=20)
+        Label(FreameINPandOUT , text='Choose The Images You Want >> ' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold')).place(x=30 , y=20)
+        Label(FreameINPandOUT , text='Where To Save The Results ?  >> ' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold')).place(x=30 , y=100)
+        Label(FreameSTART , text='Log ....................................' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold')).place(x=30 , y=120)
         self.root.mainloop()
     
-
+        
 test = GUI()
 test.LoadRootWindows()

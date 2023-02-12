@@ -23,6 +23,18 @@ class GUI():
         FreameSTART = Frame(self.root , width=400 , height=150  , bg='#48E6E1')
         FreameSTART.pack(side=TOP)
 
+        FontButton = font.Font(family='Courier', size=20, weight='bold')
+
+        Button_JPG = Button(FreameButtomFormatOutPut , text='JPG' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_JPG.place(x=30 , y=50)
+
+
+        Button_PNG = Button(FreameButtomFormatOutPut , text='PNG' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_PNG.place(x=170 , y=50)
+
+        Button_WEBP = Button(FreameButtomFormatOutPut , text='WEBP' , bg='#A527E4'  , width=4 , height=1 , font=FontButton)
+        Button_WEBP.place(x=300 , y=50)
+        
         self.root.mainloop()
     
 

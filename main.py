@@ -88,10 +88,3 @@ test.OrganizeImagesAddress()
 print(test.Images)
 print(OutPath)
 test.Run()
-
-
-
-
-
-
-

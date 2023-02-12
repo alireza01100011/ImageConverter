@@ -14,6 +14,15 @@ class GUI():
         self.root.config(bg='#48E6E1')
         self.root.resizable(False , False)
         
+        FreameButtomFormatOutPut = Frame(self.root , width=400 , height=200 , bg='#48E6E1')
+        FreameButtomFormatOutPut.pack(side=TOP)
+
+        FreameINPandOUT = Frame(self.root , width=400 , height=150 , bg='#48E6E1')
+        FreameINPandOUT.pack(side=TOP)
+
+        FreameSTART = Frame(self.root , width=400 , height=150  , bg='#48E6E1')
+        FreameSTART.pack(side=TOP)
+
         self.root.mainloop()
     
 

@@ -12,8 +12,8 @@ class ConvertImage():
         self.FAST = FAST
         # self.PathInput = PathInputFolder # (This feature will be added in future updates)
         self.PathOutput = PathOutputFolder
-        self.FormatsInput  = ('jpeg' , 'png' , 'webp')
-        self.FormatsOutput = ('jpeg' , 'png' , 'webp') # jpg
+        self.FormatsInput  = ( 'jpg', 'jpeg' , 'png' , 'webp')
+        self.FormatsOutput = ('jpeg' , 'png' , 'webp')
         self.FormatOutout = ForamtOutput
         self.Images = Images
         self.ImagesPath = ImagesPath

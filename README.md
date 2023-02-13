@@ -27,7 +27,11 @@ An Image Format Conversion Program With Python
 	apt-get install pip3
 	
 	pip install pillow
-
+	
+	cd [Source Path]
+	
+	python GUI.py
+	
 > Commands For Setup In Windows :
 
 	Download And Run The Windows Setup File 

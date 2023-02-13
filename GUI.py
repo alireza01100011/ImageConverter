@@ -25,6 +25,7 @@ class GUI():
 
     def _FillingAnimation(self):  
         for s in range(100) : self.Proses['value'] = s ; time.sleep(0.008)
+        
 
 
 
@@ -96,6 +97,7 @@ class GUI():
         self.AppIsRun = True
 
         Thread(target= self._FillingAnimation).start()
+        time.sleep(0.8)
         # Start processing images
         self.Convert = main.ConvertImage(ImagesPath=self.Images , PathOutputFolder=self.PathOutputFolder , ForamtOutput=self.ForamtOutput) 
         self.Convert.OrganizeImagesAddress()
@@ -106,16 +108,16 @@ class GUI():
         self._RunUpdate = True
         
         # Log display in graphical interface and progress bar
-        Thread(target= self._FillingAnimation).start()
         Thread(target= self.UpdateGUI).start()
         
         Run.join()
         
         # Log display in graphical interface and progress bar
         self._RunUpdate = False
-        
+
+        time.sleep(1)
         Thread(target= self._FillingAnimation).start()
-        
+        time.sleep(1)
         self.Proses['value'] = 100
         self.Label_ShowLog['text'] = 'Done ! '
         

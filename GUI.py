@@ -1,11 +1,27 @@
 from tkinter import * 
 import tkinter.font as font
 from tkinter import ttk
+import tkinter.filedialog as fd
 from threading import Thread
+import main
 
 class GUI():
     def __init__(self) -> None:
-        pass
+        self.ForamtOutput = None
+        self.PathOutputFolder = None
+        self.Images = None
+    
+    def SetForamtOutput(self , Extension , Button):
+        # Buttons With Color Code
+        ButtonsFormat = ((self.Button_JPG , '#66FFFF') , (self.Button_PNG  , '#33FFFF'), (self.Button_WEBP , '#00FFFF' ))
+        
+        # Set The Output Extension 
+        self.ForamtOutput = Extension
+        
+        # Change The Color Of The Buttons 
+        for button in ButtonsFormat:
+            if button[0] == Button : Button['bg'] = '#FFFF00'
+            else : button[0]['bg'] = button[1]
 
     def LoadRootWindows(self):
         self.root = Tk()
@@ -28,13 +44,13 @@ class GUI():
 
         # ### === >  Buttons < ==== ### #
         # JPG
-        self.Button_JPG = Button(self.FreameButtomFormatOutPut , text='JPG' , bg='#66FFFF'  , width=4 , height=1 , font=FontButton)
+        self.Button_JPG = Button(self.FreameButtomFormatOutPut , text='JPG' , bg='#66FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('jpg' , self.Button_JPG))
         self.Button_JPG.place(x=30 , y=80)
         # PNG
-        self.Button_PNG = Button(self.FreameButtomFormatOutPut , text='PNG' , bg='#33FFFF'  , width=4 , height=1 , font=FontButton)
+        self.Button_PNG = Button(self.FreameButtomFormatOutPut , text='PNG' , bg='#33FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('png' , self.Button_PNG))
         self.Button_PNG.place(x=170 , y=80)
         # WEBP
-        self.Button_WEBP = Button(self.FreameButtomFormatOutPut , text='WEBP' , bg='#00FFFF'  , width=4 , height=1 , font=FontButton)
+        self.Button_WEBP = Button(self.FreameButtomFormatOutPut , text='WEBP' , bg='#00FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('webp' , self.Button_WEBP))
         self.Button_WEBP.place(x=300 , y=80)
         # Select Images
         FontButtonINPandOUT = font.Font(family='Comic Sans MS', size=10)
@@ -68,4 +84,4 @@ class GUI():
     
         
 test = GUI()
-Thread(target=test.LoadRootWindows).start()
+test.LoadRootWindows()

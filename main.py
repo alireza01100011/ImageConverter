@@ -75,16 +75,16 @@ class ConvertImage():
         else :
             return
 
+if __name__ == '__main__':
 
+    InPath = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
+                        ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
+                        ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
 
-InPath = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
-                    ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
-                    ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
-
-print(InPath)
-OutPath = filedialog.askdirectory(title="Select Drictory For Save")
-test = ConvertImage(ImagesPath=InPath , PathOutputFolder=OutPath , ForamtOutput='webp')
-test.OrganizeImagesAddress()
-print(test.Images)
-print(OutPath)
-test.Run()
+    print(InPath)
+    OutPath = filedialog.askdirectory(title="Select Drictory For Save")
+    test = ConvertImage(ImagesPath=InPath , PathOutputFolder=OutPath , ForamtOutput='webp')
+    test.OrganizeImagesAddress()
+    print(test.Images)
+    print(OutPath)
+    test.Run()

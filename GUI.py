@@ -1,5 +1,6 @@
 # https://github.com/alireza536
 # Python 3.10.5 64bit
+# Releases 1.1
 
 from tkinter import * 
 from tkinter import ttk

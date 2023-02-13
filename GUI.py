@@ -7,6 +7,7 @@ import tkinter.font as font
 import tkinter.filedialog as fd
 import main
 import os
+import time
 
 class GUI():
     def __init__(self) -> None:
@@ -14,6 +15,9 @@ class GUI():
         self.PathOutputFolder = None
         self.Images = None
     
+    def _FillingAnimation(self):  
+        for s in range(100) : self.Proses['value'] = s ; time.sleep(0.008)
+
     def SetForamtOutput(self , Extension , Button):
         # Buttons With Color Code
         ButtonsFormat = ((self.Button_JPG , '#66FFFF') , (self.Button_PNG  , '#33FFFF'), (self.Button_WEBP , '#00FFFF' ))
@@ -30,6 +34,7 @@ class GUI():
         images = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
                         ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
                         ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
+        if len(images) == 0 : return
         self.Images = images
         # Size Calculation
         Total , Size = 0 , 0
@@ -39,9 +44,40 @@ class GUI():
         self.Label_TotalImagesAndSize.place(x=30 , y=50)
     
     def ChooseDirectorySave(self):
-        self.PathOutputFolder = filedialog.askdirectory(title="Select Drictory For Save")
+        path = filedialog.askdirectory(title="Select Drictory For Save")
+        if len(path) == 0: print('None') ; return
+        self.PathOutputFolder = path
         self.Label_ShowPathOutputFolder = Label(self.FreameINPandOUT , text=self.PathOutputFolder , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_ShowPathOutputFolder.place(x=30 , y=130)
+    
+    def UpdateGUI(self):
+        while self._RunUpdate:
+            self.Proses['value'] = self.Convert.Progress
+            self.Label_ShowLog['text'] = self.Convert.Log
+
+    def Start(self):
+        if self.ForamtOutput == None: self.Label_ShowLog['text'] = 'Please Specify The Output Format (JPG , PNG , WEBP)' ; self.Label_ShowLog['fg'] = 'red' ; return False
+        elif self.PathOutputFolder == None : self.Label_ShowLog['text'] = 'Please Specify The Storage Location (Seve)' ; self.Label_ShowLog['fg'] = 'red' ; return False
+        elif self.Images == None : self.Label_ShowLog['text'] = 'Please Select Images (Selection)' ; self.Label_ShowLog['fg'] = 'red' ; return False
+        else :  self.Label_ShowLog['text'] = 'Starting Conversion ...' ; self.Label_ShowLog['fg'] = '#000000'
+        
+        Thread(target= self._FillingAnimation).start()
+        
+        self.Convert = main.ConvertImage(ImagesPath=self.Images , PathOutputFolder=self.PathOutputFolder , ForamtOutput=self.ForamtOutput)
+        self.Convert.OrganizeImagesAddress()
+        
+        Run = Thread(target= self.Convert.Run)
+        Run.start()
+        print('Start')
+        self._RunUpdate = True
+        Thread(target= self._FillingAnimation).start()
+        Thread(target= self.UpdateGUI).start()
+        Run.join()
+        self._RunUpdate = False
+        Thread(target= self._FillingAnimation).start()
+        self.Proses['value'] = 100
+        self.Label_ShowLog['text'] = 'Done ! '
+            
     def LoadRootWindows(self):
         self.root = Tk()
         self.root.geometry('400x500')
@@ -79,7 +115,7 @@ class GUI():
         self.Button_Seve = Button(self.FreameINPandOUT , text='Seve' , bg='#27E48C'  , width=8 , height=1 , font=FontButtonINPandOUT , command=lambda : Thread(target=self.ChooseDirectorySave).start() )
         self.Button_Seve.place(x=305 , y=100)
         # Start Button
-        self.Button_Start = Button(self.FreameSTART , text='Start' , bg='#FFFFFF'  , width=6 , height=2 , font=font.Font(family='Comic Sans MS', size=12, weight='bold'))
+        self.Button_Start = Button(self.FreameSTART , text='Start' , bg='#FFFFFF'  , width=6 , height=2 , font=font.Font(family='Comic Sans MS', size=12, weight='bold') , command=lambda : Thread(target=self.Start).start())
         self.Button_Start.place(x=310 , y=50)
 
         # ### === >  Labels (Text) < ==== ### #
@@ -91,7 +127,7 @@ class GUI():
         self.Label_PathSeve = Label(self.FreameINPandOUT , text='Where To Save The Results ?  >> ' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_PathSeve.place(x=30 , y=100)
         
-        self.Label_ShowLog = Label(self.FreameSTART , text='Log ....................................' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
+        self.Label_ShowLog = Label(self.FreameSTART , text='' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_ShowLog.place(x=30 , y=110)
         
         # ### === >  Progressbar < ==== ### #

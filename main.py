@@ -14,7 +14,9 @@ class ConvertImage():
         self.FormatOutout = ForamtOutput
         self.Images = Images
         self.ImagesPath = ImagesPath
-    
+        self.Log = ''
+        self.Progress = 0
+
     # Extract images from the folder (This feature will be added in future updates)
     # def FindImages(self):
     #     # Get the files and folders in the input folder
@@ -51,15 +53,16 @@ class ConvertImage():
 
     def ConvertImage(self , Photo):
         try :
-            print(Photo['path'])
+            self.Progress += 100 / len(self.Images)
+            self.Log = (f'Start {Photo["name"]} Photo Processing ')
             # Open The Image
             Img = Image.open(Photo['path'])
             # Convert the image to RGB Colour
             Img = Img.convert('RGB')
             # Save The Image
             Img.save(f'{self.PathOutput}/{Photo["name"]}.{self.FormatOutout}' , self.FormatOutout)
-            print('Done')
-        except OSError : return False
+            self.Log = f'Image Of {Photo["name"]} Was Processed Successfully '
+        except OSError : self.Log = f'A Problem Occurred While Processing The Image Of {Photo["name"]} !' ; return False
     
     def Run(self):
         if self.FAST == True:

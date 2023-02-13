@@ -5,6 +5,7 @@ from threading import Thread
 
 import tkinter.font as font
 import tkinter.filedialog as fd
+import webbrowser
 import main
 import os
 import time
@@ -15,6 +16,8 @@ class GUI():
         self.PathOutputFolder = None
         self.Images = None
     
+    def callback(self , url): webbrowser.open_new(url)
+
     def _FillingAnimation(self):  
         for s in range(100) : self.Proses['value'] = s ; time.sleep(0.008)
 
@@ -80,7 +83,7 @@ class GUI():
             
     def LoadRootWindows(self):
         self.root = Tk()
-        self.root.geometry('400x500')
+        self.root.geometry('400x550')
         self.root.title('Image Converter')
         self.root.config(bg='#48E6E1')
         self.root.resizable(False , False)
@@ -92,7 +95,7 @@ class GUI():
         self.FreameINPandOUT = Frame(self.root , width=400 , height=150 , bg='#48E6E1')
         self.FreameINPandOUT.pack(side=TOP)
 
-        self.FreameSTART = Frame(self.root , width=400 , height=150  , bg='#48E6E1')
+        self.FreameSTART = Frame(self.root , width=400 , height=200  , bg='#48E6E1')
         self.FreameSTART.pack(side=TOP)
 
         FontButton = font.Font(family='Comic Sans MS', size=20, weight='bold')
@@ -127,13 +130,28 @@ class GUI():
         self.Label_PathSeve = Label(self.FreameINPandOUT , text='Where To Save The Results ?  >> ' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_PathSeve.place(x=30 , y=100)
         
+        self.Label_CPU = Label(self.FreameSTART , text='This Program Uses All The Power Of Your CPU For Higher Speed ' , bg='#48E6E1' , fg='red' , font=font.Font(family='Comic Sans MS', size=8 , weight='bold'))
+        self.Label_CPU.place(x=20 , y=10)
+        
         self.Label_ShowLog = Label(self.FreameSTART , text='' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
-        self.Label_ShowLog.place(x=30 , y=110)
+        self.Label_ShowLog.place(x=30 , y=120)
         
         # ### === >  Progressbar < ==== ### #
         self.Proses = ttk.Progressbar(self.FreameSTART , orient=HORIZONTAL , length=250  , mode='determinate')
         self.Proses.place(x=30,y=60 , height=40)
 
+        # ### === >  Links < ==== ### #
+        DeveloperPage = Label(self.FreameSTART, text="Developer", bg='#48E6E1', fg="#000000", cursor="hand2" , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
+        DeveloperPage.place(x=310 , y=160)
+        DeveloperPage.bind("<Button-1>", lambda e: self.callback("https://github.com/alireza536"))
+
+        SourceCode = Label(self.FreameSTART, text="Source Code", bg='#48E6E1', fg="#000000", cursor="hand2" , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
+        SourceCode.place(x=155 , y=160)
+        SourceCode.bind("<Button-1>", lambda e: self.callback("https://github.com/alireza536/ImageConverter"))
+
+        Update = Label(self.FreameSTART, text="Update", bg='#48E6E1', fg="#000000", cursor="hand2" , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
+        Update.place(x=30 , y=160)
+        Update.bind("<Button-1>", lambda e: self.callback("https://github.com/alireza536/ImageConverter"))
         
         self.root.mainloop()
     

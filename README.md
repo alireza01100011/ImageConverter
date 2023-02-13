@@ -34,5 +34,6 @@ An Image Format Conversion Program With Python
 	
 > Commands For Setup In Windows :
 
-	Download And Run The Windows Setup File (Download Installer)[https://github.com/alireza536/ImageConverter/blob/master/Installer.exe]
+	Download And Run The Windows Setup File 
 
+(Download Installer)[https://github.com/alireza536/ImageConverter/blob/master/Installer.exe]

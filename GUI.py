@@ -1,3 +1,6 @@
+# https://github.com/alireza536
+# Python 3.10.5 64bit
+
 from tkinter import * 
 from tkinter import ttk
 from tkinter import filedialog
@@ -15,13 +18,20 @@ class GUI():
         self.ForamtOutput = None
         self.PathOutputFolder = None
         self.Images = None
+        self.AppIsRun = False #To control buttons during processing
     
-    def callback(self , url): webbrowser.open_new(url)
+    def callback(self , url): 
+        webbrowser.open_new(url)
 
     def _FillingAnimation(self):  
         for s in range(100) : self.Proses['value'] = s ; time.sleep(0.008)
 
+
+
+    # Output format selection function (This function changes the color of the buttons and saves the output format)
     def SetForamtOutput(self , Extension , Button):
+        # To disable buttons during processing
+        if self.AppIsRun : return
         # Buttons With Color Code
         ButtonsFormat = ((self.Button_JPG , '#66FFFF') , (self.Button_PNG  , '#33FFFF'), (self.Button_WEBP , '#00FFFF' ))
         
@@ -32,12 +42,18 @@ class GUI():
         for button in ButtonsFormat:
             if button[0] == Button : Button['bg'] = '#FFFF00'
             else : button[0]['bg'] = button[1]
-                
+
+
+
+    # Select images      
     def SelectImages(self):
+        # To disable buttons during processing
+        if self.AppIsRun : return
         images = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
                         ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
                         ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
-        if len(images) == 0 : return
+        # Avoid being empty
+        if len(images) == 0 : return 
         self.Images = images
         # Size Calculation
         Total , Size = 0 , 0
@@ -46,47 +62,73 @@ class GUI():
         self.Label_TotalImagesAndSize = Label(self.FreameINPandOUT , text=f'Total : {Total} {" "* ( 10 - len(str(Total)))} Size : {round(Size , 2)} MB' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_TotalImagesAndSize.place(x=30 , y=50)
     
+
+
+    # Select the folder to save the processed images
     def ChooseDirectorySave(self):
+        # To disable buttons during processing
+        if self.AppIsRun : return
         path = filedialog.askdirectory(title="Select Drictory For Save")
-        if len(path) == 0: print('None') ; return
+        # Avoid being empty
+        if len(path) == 0: print('None') ; return False
         self.PathOutputFolder = path
         self.Label_ShowPathOutputFolder = Label(self.FreameINPandOUT , text=self.PathOutputFolder , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
         self.Label_ShowPathOutputFolder.place(x=30 , y=130)
     
+
+
+    # Log display in graphical interface and progress bar
     def UpdateGUI(self):
         while self._RunUpdate:
             self.Proses['value'] = self.Convert.Progress
             self.Label_ShowLog['text'] = self.Convert.Log
 
+
+    # Start ..... 
     def Start(self):
+        # Check if the entries are not empty
         if self.ForamtOutput == None: self.Label_ShowLog['text'] = 'Please Specify The Output Format (JPG , PNG , WEBP)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         elif self.PathOutputFolder == None : self.Label_ShowLog['text'] = 'Please Specify The Storage Location (Seve)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         elif self.Images == None : self.Label_ShowLog['text'] = 'Please Select Images (Selection)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         else :  self.Label_ShowLog['text'] = 'Starting Conversion ...' ; self.Label_ShowLog['fg'] = '#000000'
         
+        # To disable buttons during processing
+        self.AppIsRun = True
+
         Thread(target= self._FillingAnimation).start()
-        
-        self.Convert = main.ConvertImage(ImagesPath=self.Images , PathOutputFolder=self.PathOutputFolder , ForamtOutput=self.ForamtOutput)
+        # Start processing images
+        self.Convert = main.ConvertImage(ImagesPath=self.Images , PathOutputFolder=self.PathOutputFolder , ForamtOutput=self.ForamtOutput) 
         self.Convert.OrganizeImagesAddress()
-        
         Run = Thread(target= self.Convert.Run)
         Run.start()
-        print('Start')
+        
+        # Log display control in graphical interface and progress bar
         self._RunUpdate = True
+        
+        # Log display in graphical interface and progress bar
         Thread(target= self._FillingAnimation).start()
         Thread(target= self.UpdateGUI).start()
+        
         Run.join()
+        
+        # Log display in graphical interface and progress bar
         self._RunUpdate = False
+        
         Thread(target= self._FillingAnimation).start()
+        
         self.Proses['value'] = 100
         self.Label_ShowLog['text'] = 'Done ! '
-            
+        
+        # To control buttons during processing
+        self.AppIsRun = False
+
     def LoadRootWindows(self):
         self.root = Tk()
         self.root.geometry('400x550')
         self.root.title('Image Converter')
         self.root.config(bg='#48E6E1')
         self.root.resizable(False , False)
+        self.root.iconphoto(False, PhotoImage(file = './Icon.png'))
         
         # ### === >  Freames < ==== ### #
         self.FreameButtomFormatOutPut = Frame(self.root , width=400 , height=200 , bg='#48E6E1')
@@ -134,7 +176,7 @@ class GUI():
         self.Label_CPU.place(x=20 , y=10)
         
         self.Label_ShowLog = Label(self.FreameSTART , text='' , bg='#48E6E1' , font=font.Font(family='Comic Sans MS', size=10 , weight='bold'))
-        self.Label_ShowLog.place(x=30 , y=120)
+        self.Label_ShowLog.place(x=10 , y=120)
         
         # ### === >  Progressbar < ==== ### #
         self.Proses = ttk.Progressbar(self.FreameSTART , orient=HORIZONTAL , length=250  , mode='determinate')

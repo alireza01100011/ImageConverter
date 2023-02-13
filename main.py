@@ -1,3 +1,6 @@
+# https://github.com/alireza536
+# Python 3.10.5 64bit
+
 from PIL import Image
 from tkinter import filedialog
 import tkinter.filedialog as fd

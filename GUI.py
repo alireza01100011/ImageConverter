@@ -51,8 +51,8 @@ class GUI():
         # To disable buttons during processing
         if self.AppIsRun : return
         images = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
-                        ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
-                        ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
+                        ("All Images", ".jpeg"),("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
+                        ("JPEG", ".jpeg"),("PNG", ".png"),("WEBP", ".webp"),("JPG", ".jpg")])
         # Avoid being empty
         if len(images) == 0 : return 
         self.Images = images
@@ -88,7 +88,7 @@ class GUI():
     # Start ..... 
     def Start(self):
         # Check if the entries are not empty
-        if self.ForamtOutput == None: self.Label_ShowLog['text'] = 'Please Specify The Output Format (JPG , PNG , WEBP)' ; self.Label_ShowLog['fg'] = 'red' ; return False
+        if self.ForamtOutput == None: self.Label_ShowLog['text'] = 'Please Specify The Output Format (JPEG , PNG , WEBP)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         elif self.PathOutputFolder == None : self.Label_ShowLog['text'] = 'Please Specify The Storage Location (Seve)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         elif self.Images == None : self.Label_ShowLog['text'] = 'Please Select Images (Selection)' ; self.Label_ShowLog['fg'] = 'red' ; return False
         else :  self.Label_ShowLog['text'] = 'Starting Conversion ...' ; self.Label_ShowLog['fg'] = '#000000'
@@ -146,7 +146,7 @@ class GUI():
 
         # ### === >  Buttons < ==== ### #
         # JPG
-        self.Button_JPG = Button(self.FreameButtomFormatOutPut , text='JPG' , bg='#66FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('jpg' , self.Button_JPG))
+        self.Button_JPG = Button(self.FreameButtomFormatOutPut , text='JPEG' , bg='#66FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('jpeg' , self.Button_JPG))
         self.Button_JPG.place(x=30 , y=80)
         # PNG
         self.Button_PNG = Button(self.FreameButtomFormatOutPut , text='PNG' , bg='#33FFFF'  , width=4 , height=1 , font=FontButton , command=lambda : self.SetForamtOutput('png' , self.Button_PNG))

@@ -12,8 +12,8 @@ class ConvertImage():
         self.FAST = FAST
         # self.PathInput = PathInputFolder # (This feature will be added in future updates)
         self.PathOutput = PathOutputFolder
-        self.FormatsInput  = ('jpg' , 'png' , 'webp')
-        self.FormatsOutput = ('jpg' , 'png' , 'webp')
+        self.FormatsInput  = ('jpeg' , 'png' , 'webp')
+        self.FormatsOutput = ('jpeg' , 'png' , 'webp') # jpg
         self.FormatOutout = ForamtOutput
         self.Images = Images
         self.ImagesPath = ImagesPath
@@ -84,8 +84,8 @@ class ConvertImage():
 if __name__ == '__main__':
 
     InPath = fd.askopenfilenames(title='Choose a file' ,  filetypes=[
-                        ("All Images", ".jpg"),("All Images", ".png"),("All Images", ".webp"),
-                        ("JPG", ".jpg"),("PNG", ".png"),("WEBP", ".webp"),])
+                        ("All Images", ".jpeg"),("All Images", ".png"),("All Images", ".webp"),
+                        ("JPEG", ".jpeg"),("PNG", ".png"),("WEBP", ".webp"),])
 
     print(InPath)
     OutPath = filedialog.askdirectory(title="Select Drictory For Save")
